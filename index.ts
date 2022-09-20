@@ -54,7 +54,8 @@ const students: Student[] = [
 
 // Function to calculate average score
 
-const averageScore = (testScores: TestScore[]): number => {
+export const averageScore = (testScores: TestScore[]): number => {
+  if (testScores.length === 0 || !testScores) return 0;
   const totalScore = testScores.reduce((total, testScore) => {
     return total + testScore.score;
   }, 0);
@@ -66,7 +67,7 @@ const averageScore = (testScores: TestScore[]): number => {
 
 // the return type should be Student[] with testScores and email removed
 
-const formatStudentData = (students: Student[]): FormattedStudent[] => {
+export const formatStudentData = (students: Student[]): FormattedStudent[] => {
   return students.map((student) => {
     return {
       id: student.id,
@@ -77,7 +78,9 @@ const formatStudentData = (students: Student[]): FormattedStudent[] => {
 
 // Function to get students that failed
 
-const getStudentsThatFailed = (students: Student[]): FormattedStudent[] => {
+export const getStudentsThatFailed = (
+  students: Student[]
+): FormattedStudent[] => {
   return formatStudentData(
     students.filter((student) => {
       return averageScore(student.testScores) < 60;
