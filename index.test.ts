@@ -142,6 +142,33 @@ describe("getStudentsThatFailed", () => {
     getStudentsThatFailed(students, mailFn);
     expect(mailFn).toHaveBeenCalled();
   });
+
+  it("should not call the mail function if all students passed", () => {
+    const mailFn = jest.fn();
+    const students = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "",
+        testScores: [
+          {
+            subject: "Math",
+            score: 90,
+          },
+          {
+            subject: "English",
+            score: 80,
+          },
+          {
+            subject: "Science",
+            score: 70,
+          },
+        ],
+      },
+    ];
+    getStudentsThatFailed(students, mailFn);
+    expect(mailFn).not.toHaveBeenCalled();
+  });
 });
 
 describe("formatStudentData", () => {
