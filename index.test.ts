@@ -83,4 +83,30 @@ describe("getStudentsThatFailed", () => {
     const result = getStudentsThatFailed(students);
     expect(result).toEqual([]);
   });
+
+  it("should return an empty array if all students passed", () => {
+    const students = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "",
+        testScores: [
+          {
+            subject: "Math",
+            score: 90,
+          },
+          {
+            subject: "English",
+            score: 80,
+          },
+          {
+            subject: "Science",
+            score: 70,
+          },
+        ],
+      },
+    ];
+    const result = getStudentsThatFailed(students);
+    expect(result).toEqual([]);
+  });
 });
