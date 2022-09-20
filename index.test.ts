@@ -41,6 +41,7 @@ describe("getAverageTests", () => {
 
 describe("getStudentsThatFailed", () => {
   it("should return an array of students that have failed", () => {
+    const mailFn = jest.fn();
     const students = [
       {
         id: 1,
@@ -63,7 +64,7 @@ describe("getStudentsThatFailed", () => {
       },
     ];
 
-    const result = getStudentsThatFailed(students);
+    const result = getStudentsThatFailed(students, mailFn);
     expect(result).toEqual([
       {
         id: 1,
@@ -73,18 +74,23 @@ describe("getStudentsThatFailed", () => {
   });
 
   it("should return an empty array if there are no students", () => {
+    const mailFn = jest.fn();
+
     const students = [];
-    const result = getStudentsThatFailed(students);
+    const result = getStudentsThatFailed(students, mailFn);
     expect(result).toEqual([]);
   });
 
   it("should return an empty array if the students are undefined", () => {
+    const mailFn = jest.fn();
+
     const students = undefined;
-    const result = getStudentsThatFailed(students);
+    const result = getStudentsThatFailed(students, mailFn);
     expect(result).toEqual([]);
   });
 
   it("should return an empty array if all students passed", () => {
+    const mailFn = jest.fn();
     const students = [
       {
         id: 1,
@@ -106,8 +112,35 @@ describe("getStudentsThatFailed", () => {
         ],
       },
     ];
-    const result = getStudentsThatFailed(students);
+    const result = getStudentsThatFailed(students, mailFn);
     expect(result).toEqual([]);
+  });
+
+  it("should call the mail function if a student has failed", () => {
+    const mailFn = jest.fn();
+    const students = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "",
+        testScores: [
+          {
+            subject: "Math",
+            score: 50,
+          },
+          {
+            subject: "English",
+            score: 0,
+          },
+          {
+            subject: "Science",
+            score: 70,
+          },
+        ],
+      },
+    ];
+    getStudentsThatFailed(students, mailFn);
+    expect(mailFn).toHaveBeenCalled();
   });
 });
 

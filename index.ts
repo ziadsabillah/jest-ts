@@ -28,32 +28,7 @@ interface FormattedStudent {
   name: string;
 }
 
-// Student Data
-
-const students: Student[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "",
-    testScores: [
-      {
-        subject: "Math",
-        score: 50,
-      },
-      {
-        subject: "English",
-        score: 0,
-      },
-      {
-        subject: "Science",
-        score: 70,
-      },
-    ],
-  },
-];
-
 // Function to calculate average score
-
 export const averageScore = (
   testScores: TestScore[] | undefined | null
 ): number => {
@@ -76,16 +51,19 @@ export const formatStudentData = (students: Student[]): FormattedStudent[] => {
 };
 
 // Function to get students that failed
-
 export const getStudentsThatFailed = (
-  students: Student[] | undefined | null
+  students: Student[] | undefined | null,
+  sendMail: Function
 ): FormattedStudent[] => {
   if (!students || students.length === 0) return [];
-  return formatStudentData(
-    students.filter((student) => {
-      return averageScore(student.testScores) < 60;
-    })
-  );
-};
+  const failedStudents = students.filter((student) => {
+    const avgScore = averageScore(student.testScores);
+    if (avgScore < 60) {
+      sendMail(student.email);
+      return true;
+    }
+    return false;
+  });
 
-console.log(getStudentsThatFailed(students));
+  return formatStudentData(failedStudents);
+};
