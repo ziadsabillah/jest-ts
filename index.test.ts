@@ -1,4 +1,4 @@
-import { averageScore, getStudentsThatFailed } from ".";
+import { averageScore, formatStudentData, getStudentsThatFailed } from ".";
 
 describe("getAverageTests", () => {
   it("should return the average score based on the test scores", () => {
@@ -108,5 +108,61 @@ describe("getStudentsThatFailed", () => {
     ];
     const result = getStudentsThatFailed(students);
     expect(result).toEqual([]);
+  });
+});
+
+describe("formatStudentData", () => {
+  it("should return an array of students with only the id and name", () => {
+    const students = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "",
+        testScores: [
+          {
+            subject: "Math",
+            score: 90,
+          },
+          {
+            subject: "English",
+            score: 80,
+          },
+          {
+            subject: "Science",
+            score: 70,
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Caly Doe",
+        email: "",
+        testScores: [
+          {
+            subject: "Math",
+            score: 90,
+          },
+          {
+            subject: "English",
+            score: 80,
+          },
+          {
+            subject: "Science",
+            score: 70,
+          },
+        ],
+      },
+    ];
+    const result = formatStudentData(students);
+    expect(result).toEqual([
+      {
+        id: 1,
+        name: "John Doe",
+      },
+      {
+        id: 2,
+        name: "Caly Doe",
+      },
+    ]);
   });
 });
