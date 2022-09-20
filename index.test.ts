@@ -1,6 +1,6 @@
-import { averageScore } from ".";
+import { averageScore, getStudentsThatFailed } from ".";
 
-describe("index", () => {
+describe("getAverageTests", () => {
   it("should return the average score based on the test scores", () => {
     const testScores = [
       {
@@ -36,5 +36,51 @@ describe("index", () => {
     const testScores = null;
     const result = averageScore(testScores);
     expect(result).toBe(0);
+  });
+});
+
+describe("getStudentsThatFailed", () => {
+  it("should return an array of students that have failed", () => {
+    const students = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "",
+        testScores: [
+          {
+            subject: "Math",
+            score: 50,
+          },
+          {
+            subject: "English",
+            score: 0,
+          },
+          {
+            subject: "Science",
+            score: 70,
+          },
+        ],
+      },
+    ];
+
+    const result = getStudentsThatFailed(students);
+    expect(result).toEqual([
+      {
+        id: 1,
+        name: "John Doe",
+      },
+    ]);
+  });
+
+  it("should return an empty array if there are no students", () => {
+    const students = [];
+    const result = getStudentsThatFailed(students);
+    expect(result).toEqual([]);
+  });
+
+  it("should return an empty array if the students are undefined", () => {
+    const students = undefined;
+    const result = getStudentsThatFailed(students);
+    expect(result).toEqual([]);
   });
 });

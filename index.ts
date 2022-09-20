@@ -66,9 +66,6 @@ export const averageScore = (
 };
 
 // Function that formats the student data to be displayed
-
-// the return type should be Student[] with testScores and email removed
-
 export const formatStudentData = (students: Student[]): FormattedStudent[] => {
   return students.map((student) => {
     return {
@@ -81,15 +78,14 @@ export const formatStudentData = (students: Student[]): FormattedStudent[] => {
 // Function to get students that failed
 
 export const getStudentsThatFailed = (
-  students: Student[]
+  students: Student[] | undefined | null
 ): FormattedStudent[] => {
+  if (!students || students.length === 0) return [];
   return formatStudentData(
     students.filter((student) => {
       return averageScore(student.testScores) < 60;
     })
   );
 };
-
-// Print students that failed
 
 console.log(getStudentsThatFailed(students));
