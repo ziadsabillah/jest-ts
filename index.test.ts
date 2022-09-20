@@ -25,4 +25,16 @@ describe("index", () => {
     const result = averageScore(testScores);
     expect(result).toBe(0);
   });
+
+  it("should return 0 if the test scores are undefined", () => {
+    const testScores = undefined;
+    const result = averageScore(testScores);
+    expect(result).toBe(0);
+  });
+
+  it("should return 0 if the test scores are null", () => {
+    const testScores = null;
+    const result = averageScore(testScores);
+    expect(result).toBe(0);
+  });
 });

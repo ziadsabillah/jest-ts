@@ -54,8 +54,10 @@ const students: Student[] = [
 
 // Function to calculate average score
 
-export const averageScore = (testScores: TestScore[]): number => {
-  if (testScores.length === 0 || !testScores) return 0;
+export const averageScore = (
+  testScores: TestScore[] | undefined | null
+): number => {
+  if (!testScores || testScores.length === 0) return 0;
   const totalScore = testScores.reduce((total, testScore) => {
     return total + testScore.score;
   }, 0);
